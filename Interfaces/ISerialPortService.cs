@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static CheapSerial.Core.Models.ConnectionStatusChangedEventArgs;
+using static CheapSerial.Core.Models.SerialDataReceivedEventArgs;
+using static CheapSerial.Core.Models.SerialPinChangedEventArgs;
 
 namespace CheapSerial.Interfaces
 {

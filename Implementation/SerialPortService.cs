@@ -4,6 +4,9 @@ using CheapSerial.Core.Models;
 using CheapSerial.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using static CheapSerial.Core.Models.ConnectionStatusChangedEventArgs;
+using static CheapSerial.Core.Models.SerialDataReceivedEventArgs;
+using static CheapSerial.Core.Models.SerialPinChangedEventArgs;
 
 namespace CheapSerial.Implementation
 {

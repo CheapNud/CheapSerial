@@ -3,6 +3,9 @@ using CheapSerial.Core.Models;
 using System;
 using System.IO.Ports;
 using System.Threading.Tasks;
+using static CheapSerial.Core.Models.ConnectionStatusChangedEventArgs;
+using static CheapSerial.Core.Models.SerialDataReceivedEventArgs;
+using static CheapSerial.Core.Models.SerialPinChangedEventArgs;
 
 namespace CheapSerial.Interfaces
 {
