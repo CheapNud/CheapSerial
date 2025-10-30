@@ -447,7 +447,7 @@ MIT License - see [LICENSE.txt](LICENSE.txt)
 - [Issue #28968](https://github.com/dotnet/runtime/issues/28968) - ReadAsync ignoring timeouts
 - [Issue #35545](https://github.com/dotnet/runtime/issues/35545) - FlushAsync corruption
 - [Issue #54575](https://github.com/dotnet/runtime/issues/54575) - Missing modern async methods
-- [SerialStream.cs source](https://github.com/dotnet/runtime/blob/main/src/libraries/System.IO.Ports/src/System/IO/Ports/SerialStream.cs) - See the confession yourself
+- [SerialStream.cs source](https://github.com/dotnet/runtime/blob/main/src/libraries/System.IO.Ports/src/System/IO/Ports/SerialStream.Windows.cs#L891-L896) - See the confession yourself
 
 ---
 
