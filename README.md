@@ -8,7 +8,7 @@ Because `System.IO.Ports.SerialPort` has been fundamentally broken since .NET Fr
 
 ## The Problem: A 15+ Year Old Confession
 
-Deep in the .NET Runtime source code ([SerialStream.cs, lines 960-966](https://github.com/dotnet/runtime/blob/main/src/libraries/System.IO.Ports/src/System/IO/Ports/SerialStream.cs#L960-L966)), there's a developer comment that reads like a confession at a support group:
+Deep in the .NET Runtime source code ([SerialStream.cs, lines 960-966](https://github.com/dotnet/runtime/blob/main/src/libraries/System.IO.Ports/src/System/IO/Ports/SerialStream.Windows.cs#L960-L966)), there's a developer comment that reads like a confession at a support group:
 
 ```csharp
 // I'm not sure what we can do here after an async operation with infinite
