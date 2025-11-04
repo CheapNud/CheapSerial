@@ -417,10 +417,6 @@ Windows only for now. Linux support is planned for a future release.
 
 Their official position (Issue #1832) is to build a new API from scratch rather than fix the existing one. So probably not.
 
-### Is this production-ready?
-
-Yes. CheapSerial is used in production environments where serial port communication is critical. The codebase is thoroughly tested and handles edge cases properly.
-
 ## Contributing
 
 Contributions welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) first.
