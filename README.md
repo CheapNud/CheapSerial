@@ -97,6 +97,8 @@ Based on extensive community reporting across multiple GitHub issues:
    - .NET 7 changed timeout exceptions from `TimeoutException` to `IOException`
    - Because consistency is overrated
 
+For more issues please read ([this](https://github.com/jcurl/RJCP.DLL.SerialPortStream?tab=readme-ov-file#21-issues-with-ms-serial-port))
+
 ### Why Microsoft Won't Fix It
 
 The hardware dependency problem is real - serial port behavior varies wildly across:
