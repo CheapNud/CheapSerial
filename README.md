@@ -388,7 +388,7 @@ Benchmarks show comparable or better performance than `System.IO.Ports.SerialPor
 
 ## Requirements
 
-- .NET 8.0 or higher
+- .NET 11.0 or higher
 - Windows (Linux support planned)
 - Physical or virtual COM port
 

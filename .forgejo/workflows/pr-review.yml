@@ -5,14 +5,14 @@ on:
     types: [opened, synchronize, reopened]
     paths-ignore:
       - '**.md'
-      - 'Docs/**'
+      - 'docs/**'
 
 env:
   CLAUDE_MODEL: "claude-opus-4-8"
   MAX_TOKENS: 4096
   MAX_DIFF_SIZE_BYTES: 300000
-  # Your Gitea instance base URL — update if you have a hostname
-  GITEA_URL: "http://192.168.1.15:3000"
+  # The forge's own URL as the runner knows it — survives instance moves
+  GITEA_URL: ${{ github.server_url }}
 
 jobs:
   claude-review:
@@ -96,16 +96,26 @@ jobs:
           DELETIONS=$(jq -r '.deletions // 0' pr-details.json)
           CHANGED_FILES=$(jq -r '.changed_files // 0' pr-details.json)
 
-          # Build the review prompt
-          PROMPT="You are an expert code reviewer for C#, .NET, Blazor, and Avalonia projects. Review this pull request and provide:
+          PROMPT="You are an expert code reviewer for C#, .NET, Blazor, and Avalonia projects.
 
-          1. **Summary**: Brief overview of changes
-          2. **Code Quality**: Assessment of code organization, patterns, and best practices
-          3. **Potential Issues**: Security concerns, bugs, performance issues, or breaking changes
-          4. **Recommendations**: Suggestions for improvements
-          5. **Verdict**: APPROVE, REQUEST CHANGES, or COMMENT
+          Review this pull request. Be extremely concise - only flag things that actually matter.
 
-          Be constructive, concise, and focus on important issues. Use markdown formatting.
+          Format your review as:
+          1. **Summary** (1-2 sentences max)
+          2. **Code Quality** followed by a 1-5 star rating using filled ⭐ and empty ☆ (e.g. ⭐⭐⭐⭐☆). Below the rating, add one short sentence highlighting a strength or positive aspect of the PR.
+          3. **Issues** (only bugs, security problems, deadlocks, resource leaks, or breaking changes - skip this section entirely if none found). Prefix each issue with a severity orb: 🔴 Critical, 🟡 Warning, 🟢 Minor. Place the orb directly before the issue title, e.g. 🔴 DependencyChecker.cs — process not disposed. Do NOT put orbs on section headers.
+          4. **Verdict**: One of these three:
+             - **APPROVE** — code is good to merge
+             - **REQUEST CHANGES** — there are issues that should be fixed before merging. List the specific changes needed as a short bullet list directly under the verdict
+             - **REJECT** — code has fundamental or critical problems that require a rethink
+
+          Rules:
+          - Do NOT comment on style, naming, or minor preferences
+          - Do NOT suggest nice-to-have improvements or refactors
+          - Only raise issues you are confident are real problems
+          - If everything looks fine, just say so in 1-2 lines and approve
+          - NEVER repeat secrets, passwords, API keys, tokens, or internal URLs/IPs found in the diff — refer to them generically (e.g. 'the hardcoded password in line X'). Your review is posted as a public comment.
+          - If the diff introduces hardcoded credentials or secrets, flag it as a critical issue but do NOT quote the actual values.
 
           ---
 

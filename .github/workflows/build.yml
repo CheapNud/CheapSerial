@@ -1,0 +1,23 @@
+name: Build
+
+# GitHub is a sync mirror; publishing and PR review run on the forge.
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '11.0.x'
+          dotnet-quality: 'preview'
+      - name: Restore
+        run: dotnet restore CheapSerial.slnx
+      - name: Build
+        run: dotnet build CheapSerial.slnx --configuration Release --no-restore

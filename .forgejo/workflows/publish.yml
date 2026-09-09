@@ -1,0 +1,35 @@
+name: Publish NuGet
+
+# Release mechanism: push a v*.*.* tag. Bump <Version> in CheapSerial.csproj first.
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+env:
+  DOTNET_VERSION: '11.0.x'
+  DOTNET_QUALITY: 'preview'
+  CONFIGURATION: Release
+  NUGET_SOURCE: https://api.nuget.org/v3/index.json
+
+jobs:
+  publish:
+    name: Pack and Publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          dotnet-quality: ${{ env.DOTNET_QUALITY }}
+      - name: Restore
+        run: dotnet restore CheapSerial.slnx
+      - name: Build
+        run: dotnet build CheapSerial.slnx --configuration ${{ env.CONFIGURATION }} --no-restore
+      - name: Pack
+        run: dotnet pack CheapSerial.csproj --configuration ${{ env.CONFIGURATION }} --no-build --output ./nupkgs
+      - name: Publish to NuGet.org
+        run: dotnet nuget push ./nupkgs/*.nupkg --api-key "$NUGET_API_KEY" --source "$NUGET_SOURCE" --skip-duplicate
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
