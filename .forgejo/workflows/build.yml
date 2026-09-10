@@ -6,10 +6,6 @@ on:
   push:
     branches: [ master ]
 
-env:
-  DOTNET_VERSION: '11.0.x'
-  DOTNET_QUALITY: 'preview'
-
 jobs:
   build:
     name: Build
@@ -19,12 +15,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-          dotnet-quality: ${{ env.DOTNET_QUALITY }}
 
       - name: Cache NuGet packages
         uses: actions/cache@v4
