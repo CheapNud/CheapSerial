@@ -28,3 +28,6 @@ jobs:
 
       - name: Build
         run: dotnet build CheapSerial.slnx --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test CheapSerial.slnx --configuration Release --no-build --verbosity normal

@@ -18,6 +18,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Nested test project must not be globbed into the library -->
+    <Compile Remove="CheapSerial.Tests\**" />
+    <InternalsVisibleTo Include="CheapSerial.Tests" />
     <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 

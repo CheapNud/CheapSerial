@@ -217,6 +217,22 @@ namespace CheapSerial.Implementation
             }
         }
 
+        public SerialPortInfo[] GetAvailablePorts(bool includeBlacklisted = false)
+        {
+            try
+            {
+                return SerialPortEnumerator.GetPorts(includeBlacklisted);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to enumerate serial ports");
+                return [];
+            }
+        }
+
+        public SerialPortInfo? FindPort(params string[] descriptionFragments)
+            => SerialPortEnumerator.FindPort(descriptionFragments);
+
         #endregion
 
         private void InitializeConfiguredPorts()

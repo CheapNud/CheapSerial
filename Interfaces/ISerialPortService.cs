@@ -35,5 +35,7 @@ namespace CheapSerial.Interfaces
         SerialPinStates GetPinStates(string portName);
         void SetVoltageConfiguration(string portName, bool dtrEnable, bool rtsEnable, bool breakState = false);
         string[] GetAvailableComPorts();                    // Get all available COM ports on system
+        SerialPortInfo[] GetAvailablePorts(bool includeBlacklisted = false); // Ports with device descriptions, see SerialPortEnumerator
+        SerialPortInfo? FindPort(params string[] descriptionFragments);      // Single port by description, null on none, throws on ambiguity
     }
 }

@@ -344,6 +344,30 @@ await port.OpenAsync();
 // Automatically cleaned up on scope exit
 ```
 
+### Finding a Port by Device
+
+COM numbers change between machines. Pick the port by what is plugged in instead:
+
+```csharp
+// Every port present right now, with its device description
+foreach (var port in SerialPortEnumerator.GetPorts())
+    Console.WriteLine($"{port.PortName}: {port.Description} [{port.DeviceId}]");
+
+// The one CP210x adapter. Pass every localised spelling you expect:
+// Windows translates friendly names per UI language.
+var adapter = SerialPortEnumerator.FindPort("CP210x", "USB Serial Device", "Serieel USB-apparaat");
+if (adapter is null)
+    throw new InvalidOperationException("Adapter not plugged in");
+
+var manager = factory.CreateArduino(adapter.PortName);
+```
+
+`FindPort` returns `null` when nothing matches and throws when two ports match. Two identical adapters cannot be told apart by description, so it refuses to guess.
+
+Ports that are never a real device (Intel AMT/ME, Bluetooth links, hypervisor ports) are dropped by default. `GetPorts(includeBlacklisted: true)` is the diagnostics view that shows everything. The same methods are available on `ISerialPortService` as `GetAvailablePorts` and `FindPort`.
+
+Descriptions come from the registry on Windows and from `/dev/serial/by-id` on Linux, no WMI and no extra packages. Other platforms fall back to bare port names.
+
 ## Migration Guide
 
 ### From System.IO.Ports.SerialPort

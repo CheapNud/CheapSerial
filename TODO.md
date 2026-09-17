@@ -1,6 +1,6 @@
 <!--
   TODO.md — CheapSerial project work tracker
-  Last updated: 2026-09-03 (three Planned items: rich enumeration, line-framing reads, write-and-await-predicate)
+  Last updated: 2026-09-17 (rich enumeration done; line-framing reads and write-and-await-predicate remain)
 
   RULES FOR AI AGENTS:
   - Update the "Last updated" date above whenever you modify this file
@@ -32,7 +32,8 @@ _Nothing blocking._
 
 ## Planned
 
-- [ ] (2026-09-03) Rich port enumeration: descriptions + blacklist, not just `GetPortNames()` [user]
+- [x] (2026-09-03 → 2026-09-17) Rich port enumeration: descriptions + blacklist, not just `GetPortNames()` [user]
+  - Done via the registry (SERIALCOMM + Enum tree) instead of WMI: no `System.Management` dependency, runs on Linux via `/dev/serial/by-id`. See `SerialPortEnumerator`
   - WMI `Win32_PnPEntity` filtered on the Ports class GUID gives (PortName, Description, DeviceId) → enables `FindPortByDescription("CP210x")`, a never-a-device blacklist (Intel AMT/ME, Bluetooth SPP, virtual/VM COM ports), and a `GetDiagnostics()` dump for callers
   - Description whitelists must be ARRAYS: the same USB-serial adapter's friendly name differs per Windows UI language ("USB Serial Port" / "Serieel USB-apparaat" / "USB-Seriell" / "Périphérique série USB")
   - `System.Management` is Windows-only — gate it; keep `GetPortNames()` as the portable path. Ambiguity rule: two identical chipsets ⇒ refuse to auto-assign, never guess
