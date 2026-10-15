@@ -192,6 +192,7 @@ jobs:
             echo "review truncated at max_tokens (${{ env.MAX_TOKENS }}) - raise MAX_TOKENS or shrink the diff" > review-error.txt
             exit 1
           fi
+
           # Thinking blocks come first in the content array; join only the text blocks.
           REVIEW=$(echo "$RESPONSE" | jq -r '[.content[]? | select(.type == "text") | .text] | join("")')
           if [ -z "$REVIEW" ]; then
